@@ -30,7 +30,7 @@ import { CreatePage } from "@/lib/page";
 
 const CreatePageForm = () => {
 
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState<string[]>([]);
 
   const addItem = () => {
     setItems([...items, `Item ${items.length + 1}`]);

@@ -45,6 +45,7 @@ export type StartupsMinAggregateOutputType = {
   authorId: number | null
   name: string | null
   description: string | null
+  navLink: string | null
   favIcon: string | null
   revenue: number | null
   userCount: number | null
@@ -55,6 +56,7 @@ export type StartupsMaxAggregateOutputType = {
   authorId: number | null
   name: string | null
   description: string | null
+  navLink: string | null
   favIcon: string | null
   revenue: number | null
   userCount: number | null
@@ -65,6 +67,7 @@ export type StartupsCountAggregateOutputType = {
   authorId: number
   name: number
   description: number
+  navLink: number
   favIcon: number
   revenue: number
   userCount: number
@@ -91,6 +94,7 @@ export type StartupsMinAggregateInputType = {
   authorId?: true
   name?: true
   description?: true
+  navLink?: true
   favIcon?: true
   revenue?: true
   userCount?: true
@@ -101,6 +105,7 @@ export type StartupsMaxAggregateInputType = {
   authorId?: true
   name?: true
   description?: true
+  navLink?: true
   favIcon?: true
   revenue?: true
   userCount?: true
@@ -111,6 +116,7 @@ export type StartupsCountAggregateInputType = {
   authorId?: true
   name?: true
   description?: true
+  navLink?: true
   favIcon?: true
   revenue?: true
   userCount?: true
@@ -208,6 +214,7 @@ export type StartupsGroupByOutputType = {
   authorId: number
   name: string
   description: string
+  navLink: string
   favIcon: string
   revenue: number
   userCount: number
@@ -241,6 +248,7 @@ export type StartupsWhereInput = {
   authorId?: Prisma.IntFilter<"Startups"> | number
   name?: Prisma.StringFilter<"Startups"> | string
   description?: Prisma.StringFilter<"Startups"> | string
+  navLink?: Prisma.StringFilter<"Startups"> | string
   favIcon?: Prisma.StringFilter<"Startups"> | string
   revenue?: Prisma.IntFilter<"Startups"> | number
   userCount?: Prisma.IntFilter<"Startups"> | number
@@ -252,6 +260,7 @@ export type StartupsOrderByWithRelationInput = {
   authorId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  navLink?: Prisma.SortOrder
   favIcon?: Prisma.SortOrder
   revenue?: Prisma.SortOrder
   userCount?: Prisma.SortOrder
@@ -266,6 +275,7 @@ export type StartupsWhereUniqueInput = Prisma.AtLeast<{
   authorId?: Prisma.IntFilter<"Startups"> | number
   name?: Prisma.StringFilter<"Startups"> | string
   description?: Prisma.StringFilter<"Startups"> | string
+  navLink?: Prisma.StringFilter<"Startups"> | string
   favIcon?: Prisma.StringFilter<"Startups"> | string
   revenue?: Prisma.IntFilter<"Startups"> | number
   userCount?: Prisma.IntFilter<"Startups"> | number
@@ -277,6 +287,7 @@ export type StartupsOrderByWithAggregationInput = {
   authorId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  navLink?: Prisma.SortOrder
   favIcon?: Prisma.SortOrder
   revenue?: Prisma.SortOrder
   userCount?: Prisma.SortOrder
@@ -295,6 +306,7 @@ export type StartupsScalarWhereWithAggregatesInput = {
   authorId?: Prisma.IntWithAggregatesFilter<"Startups"> | number
   name?: Prisma.StringWithAggregatesFilter<"Startups"> | string
   description?: Prisma.StringWithAggregatesFilter<"Startups"> | string
+  navLink?: Prisma.StringWithAggregatesFilter<"Startups"> | string
   favIcon?: Prisma.StringWithAggregatesFilter<"Startups"> | string
   revenue?: Prisma.IntWithAggregatesFilter<"Startups"> | number
   userCount?: Prisma.IntWithAggregatesFilter<"Startups"> | number
@@ -303,6 +315,7 @@ export type StartupsScalarWhereWithAggregatesInput = {
 export type StartupsCreateInput = {
   name: string
   description: string
+  navLink: string
   favIcon: string
   revenue: number
   userCount: number
@@ -314,6 +327,7 @@ export type StartupsUncheckedCreateInput = {
   authorId: number
   name: string
   description: string
+  navLink: string
   favIcon: string
   revenue: number
   userCount: number
@@ -322,6 +336,7 @@ export type StartupsUncheckedCreateInput = {
 export type StartupsUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  navLink?: Prisma.StringFieldUpdateOperationsInput | string
   favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   revenue?: Prisma.IntFieldUpdateOperationsInput | number
   userCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -333,6 +348,7 @@ export type StartupsUncheckedUpdateInput = {
   authorId?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  navLink?: Prisma.StringFieldUpdateOperationsInput | string
   favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   revenue?: Prisma.IntFieldUpdateOperationsInput | number
   userCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -343,6 +359,7 @@ export type StartupsCreateManyInput = {
   authorId: number
   name: string
   description: string
+  navLink: string
   favIcon: string
   revenue: number
   userCount: number
@@ -351,6 +368,7 @@ export type StartupsCreateManyInput = {
 export type StartupsUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  navLink?: Prisma.StringFieldUpdateOperationsInput | string
   favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   revenue?: Prisma.IntFieldUpdateOperationsInput | number
   userCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -361,6 +379,7 @@ export type StartupsUncheckedUpdateManyInput = {
   authorId?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  navLink?: Prisma.StringFieldUpdateOperationsInput | string
   favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   revenue?: Prisma.IntFieldUpdateOperationsInput | number
   userCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -381,6 +400,7 @@ export type StartupsCountOrderByAggregateInput = {
   authorId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  navLink?: Prisma.SortOrder
   favIcon?: Prisma.SortOrder
   revenue?: Prisma.SortOrder
   userCount?: Prisma.SortOrder
@@ -398,6 +418,7 @@ export type StartupsMaxOrderByAggregateInput = {
   authorId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  navLink?: Prisma.SortOrder
   favIcon?: Prisma.SortOrder
   revenue?: Prisma.SortOrder
   userCount?: Prisma.SortOrder
@@ -408,6 +429,7 @@ export type StartupsMinOrderByAggregateInput = {
   authorId?: Prisma.SortOrder
   name?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  navLink?: Prisma.SortOrder
   favIcon?: Prisma.SortOrder
   revenue?: Prisma.SortOrder
   userCount?: Prisma.SortOrder
@@ -465,6 +487,7 @@ export type StartupsUncheckedUpdateManyWithoutAuthorNestedInput = {
 export type StartupsCreateWithoutAuthorInput = {
   name: string
   description: string
+  navLink: string
   favIcon: string
   revenue: number
   userCount: number
@@ -474,6 +497,7 @@ export type StartupsUncheckedCreateWithoutAuthorInput = {
   id?: number
   name: string
   description: string
+  navLink: string
   favIcon: string
   revenue: number
   userCount: number
@@ -513,6 +537,7 @@ export type StartupsScalarWhereInput = {
   authorId?: Prisma.IntFilter<"Startups"> | number
   name?: Prisma.StringFilter<"Startups"> | string
   description?: Prisma.StringFilter<"Startups"> | string
+  navLink?: Prisma.StringFilter<"Startups"> | string
   favIcon?: Prisma.StringFilter<"Startups"> | string
   revenue?: Prisma.IntFilter<"Startups"> | number
   userCount?: Prisma.IntFilter<"Startups"> | number
@@ -522,6 +547,7 @@ export type StartupsCreateManyAuthorInput = {
   id?: number
   name: string
   description: string
+  navLink: string
   favIcon: string
   revenue: number
   userCount: number
@@ -530,6 +556,7 @@ export type StartupsCreateManyAuthorInput = {
 export type StartupsUpdateWithoutAuthorInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  navLink?: Prisma.StringFieldUpdateOperationsInput | string
   favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   revenue?: Prisma.IntFieldUpdateOperationsInput | number
   userCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -539,6 +566,7 @@ export type StartupsUncheckedUpdateWithoutAuthorInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  navLink?: Prisma.StringFieldUpdateOperationsInput | string
   favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   revenue?: Prisma.IntFieldUpdateOperationsInput | number
   userCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -548,6 +576,7 @@ export type StartupsUncheckedUpdateManyWithoutAuthorInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  navLink?: Prisma.StringFieldUpdateOperationsInput | string
   favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   revenue?: Prisma.IntFieldUpdateOperationsInput | number
   userCount?: Prisma.IntFieldUpdateOperationsInput | number
@@ -560,6 +589,7 @@ export type StartupsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   authorId?: boolean
   name?: boolean
   description?: boolean
+  navLink?: boolean
   favIcon?: boolean
   revenue?: boolean
   userCount?: boolean
@@ -571,6 +601,7 @@ export type StartupsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   authorId?: boolean
   name?: boolean
   description?: boolean
+  navLink?: boolean
   favIcon?: boolean
   revenue?: boolean
   userCount?: boolean
@@ -582,6 +613,7 @@ export type StartupsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   authorId?: boolean
   name?: boolean
   description?: boolean
+  navLink?: boolean
   favIcon?: boolean
   revenue?: boolean
   userCount?: boolean
@@ -593,12 +625,13 @@ export type StartupsSelectScalar = {
   authorId?: boolean
   name?: boolean
   description?: boolean
+  navLink?: boolean
   favIcon?: boolean
   revenue?: boolean
   userCount?: boolean
 }
 
-export type StartupsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "authorId" | "name" | "description" | "favIcon" | "revenue" | "userCount", ExtArgs["result"]["startups"]>
+export type StartupsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "authorId" | "name" | "description" | "navLink" | "favIcon" | "revenue" | "userCount", ExtArgs["result"]["startups"]>
 export type StartupsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   author?: boolean | Prisma.PageDefaultArgs<ExtArgs>
 }
@@ -619,6 +652,7 @@ export type $StartupsPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     authorId: number
     name: string
     description: string
+    navLink: string
     favIcon: string
     revenue: number
     userCount: number
@@ -1050,6 +1084,7 @@ export interface StartupsFieldRefs {
   readonly authorId: Prisma.FieldRef<"Startups", 'Int'>
   readonly name: Prisma.FieldRef<"Startups", 'String'>
   readonly description: Prisma.FieldRef<"Startups", 'String'>
+  readonly navLink: Prisma.FieldRef<"Startups", 'String'>
   readonly favIcon: Prisma.FieldRef<"Startups", 'String'>
   readonly revenue: Prisma.FieldRef<"Startups", 'Int'>
   readonly userCount: Prisma.FieldRef<"Startups", 'Int'>

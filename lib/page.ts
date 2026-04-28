@@ -6,6 +6,7 @@ import { currentUser } from "@clerk/nextjs/server";
 type startupsSchema = {
     name: string,
     description: string,
+    navLink: string,
     favIcon: string,
     revenue: number,
     userCount: number
@@ -45,6 +46,7 @@ export async function CreatePage(data : formSchema){
             data: data.startups.map(startup => ({
                 name: startup.name,
                 description: startup.description,
+                navLink: startup.navLink,
                 favIcon: startup.favIcon,
                 revenue: startup.revenue,
                 userCount: startup.userCount,

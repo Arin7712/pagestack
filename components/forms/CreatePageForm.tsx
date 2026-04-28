@@ -25,6 +25,8 @@ import {
 import { Input } from "../ui/input";
 import { useState } from "react";
 import { CreatePage } from "@/lib/page";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 
 
@@ -50,6 +52,7 @@ const CreatePageForm = () => {
         name: "",
         favIcon: "",
         description: "",
+        navLink: "",
         revenue: 0, 
         userCount: 0
       }]
@@ -58,6 +61,8 @@ const CreatePageForm = () => {
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
     await CreatePage(data)
+    toast("Page created successfully.")
+    redirect("/pages")
     console.log("FORM DATA",data)
   }
 
@@ -67,7 +72,7 @@ const CreatePageForm = () => {
 
 
   return (
-    <Card className="w-[40%]">
+    <Card className="w-[90%]">
       <CardHeader>
         <CardTitle>Create Page</CardTitle>
         <CardDescription>Create your startup page</CardDescription>
@@ -150,6 +155,26 @@ const CreatePageForm = () => {
                         <Field data-invalid={fieldState.invalid}>
                           <FieldLabel htmlFor="form-rhf-demo-title">
                             Startup Description
+                          </FieldLabel>
+                          <Input
+                            {...field}
+                            aria-invalid={fieldState.invalid}
+                            placeholder="Login button not working on mobile"
+                            autoComplete="off"
+                          />
+                          {fieldState.invalid && (
+                            <FieldError errors={[fieldState.error]} />
+                          )}
+                        </Field>
+                      )}
+                    />
+                    <Controller
+                      name={`startups.${index}.navLink`}
+                      control={form.control}
+                      render={({ field, fieldState }) => (
+                        <Field data-invalid={fieldState.invalid}>
+                          <FieldLabel htmlFor="form-rhf-demo-title">
+                            Startup Link
                           </FieldLabel>
                           <Input
                             {...field}

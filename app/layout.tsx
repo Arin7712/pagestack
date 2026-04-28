@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist_Mono, Poppins } from "next/font/google";
-import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/sonner"
+import "@/app/globals.css";
 
 const geistSans = Poppins({
   variable: "--font-geist-sans",
@@ -41,6 +42,7 @@ export default function RootLayout({
             <Navbar/>
             {children}
           </ThemeProvider>
+          <Toaster/>
         </body>
       </html>
     </ClerkProvider>

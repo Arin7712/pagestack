@@ -38,6 +38,7 @@ model Startups {
   authorId Int
   name String
   description String
+  navLink String
   favIcon String
   revenue Int
   userCount Int

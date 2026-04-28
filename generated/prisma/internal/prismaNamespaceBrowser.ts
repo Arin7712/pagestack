@@ -100,6 +100,7 @@ export const StartupsScalarFieldEnum = {
   authorId: 'authorId',
   name: 'name',
   description: 'description',
+  navLink: 'navLink',
   favIcon: 'favIcon',
   revenue: 'revenue',
   userCount: 'userCount'

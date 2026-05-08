@@ -26,6 +26,7 @@ type UserPages = {
   favIcon: string;
   startups: Startups[];
 };
+
 const PagesTable = ({ userPages }: { userPages: UserPages[] }) => {
   return (
     <Table className="border">

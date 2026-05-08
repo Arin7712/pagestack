@@ -46,9 +46,6 @@ const SettingsForm = ({user} : {user : UserSettingsProps}) => {
       });
 
       async function onSubmit(data: z.infer<typeof editUserSchema>) {
-        await CreatePage(data);
-        toast("Page created successfully.");
-        redirect("/pages");
         console.log("FORM DATA", data);
       }
     

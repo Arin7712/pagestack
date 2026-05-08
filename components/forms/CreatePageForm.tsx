@@ -28,19 +28,16 @@ import { CreatePage } from "@/lib/page";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 
-
-
 const CreatePageForm = () => {
-
   const [items, setItems] = useState<string[]>([]);
 
   const addItem = () => {
     setItems([...items, `Item ${items.length + 1}`]);
-  }
+  };
 
   const removeItem = () => {
     setItems([...items.slice(0, -1)]);
-  }
+  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,37 +45,42 @@ const CreatePageForm = () => {
       name: "",
       description: "",
       favIcon: "",
-      startups: [{
-        name: "",
-        favIcon: "",
-        description: "",
-        navLink: "",
-        revenue: 0, 
-        userCount: 0
-      }]
+      startups: [
+        {
+          name: "",
+          favIcon: "",
+          description: "",
+          navLink: "",
+          revenue: 0,
+          userCount: 0,
+        },
+      ],
     },
-  })
+  });
 
   async function onSubmit(data: z.infer<typeof formSchema>) {
-    await CreatePage(data)
-    toast("Page created successfully.")
-    redirect("/pages")
-    console.log("FORM DATA",data)
+    await CreatePage(data);
+    toast("Page created successfully.");
+    redirect("/pages");
+    console.log("FORM DATA", data);
   }
 
   function onError(errors: any) {
-  console.log("FORM ERRORS", errors);
-}
-
+    console.log("FORM ERRORS", errors);
+  }
 
   return (
-    <Card className="w-[90%]">
+    <Card>
       <CardHeader>
         <CardTitle>Create Page</CardTitle>
         <CardDescription>Create your startup page</CardDescription>
       </CardHeader>
       <CardContent>
-        <form id="form-hrf" action="" onSubmit={form.handleSubmit(onSubmit, onError)}>
+        <form
+          id="form-hrf"
+          action=""
+          onSubmit={form.handleSubmit(onSubmit, onError)}
+        >
           <FieldGroup>
             {/* Name */}
             <Controller
@@ -123,127 +125,131 @@ const CreatePageForm = () => {
               )}
             />
 
-            <Button type="button" onClick={addItem}>Add Startup</Button>
-            {
-              items.map((item, index) => (
-                <div key={index}>
-                  <FieldGroup>
-                    <Controller
-                      name={`startups.${index}.name`}
-                      control={form.control}
-                      render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel htmlFor="form-rhf-demo-title">
-                            Startup Name
-                          </FieldLabel>
-                          <Input
-                            {...field}
-                            aria-invalid={fieldState.invalid}
-                            placeholder="Login button not working on mobile"
-                            autoComplete="off"
-                          />
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </Field>
-                      )}
-                    />
-                    <Controller
-                      name={`startups.${index}.description`}
-                      control={form.control}
-                      render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel htmlFor="form-rhf-demo-title">
-                            Startup Description
-                          </FieldLabel>
-                          <Input
-                            {...field}
-                            aria-invalid={fieldState.invalid}
-                            placeholder="Login button not working on mobile"
-                            autoComplete="off"
-                          />
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </Field>
-                      )}
-                    />
-                    <Controller
-                      name={`startups.${index}.navLink`}
-                      control={form.control}
-                      render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel htmlFor="form-rhf-demo-title">
-                            Startup Link
-                          </FieldLabel>
-                          <Input
-                            {...field}
-                            aria-invalid={fieldState.invalid}
-                            placeholder="Login button not working on mobile"
-                            autoComplete="off"
-                          />
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </Field>
-                      )}
-                    />
-                    <Controller
-                      name={`startups.${index}.revenue`}
-                      control={form.control}
-                      render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel htmlFor="form-rhf-demo-title">
-                            Startup Revenue
-                          </FieldLabel>
-                          <Input
-                            {...field}
-                            aria-invalid={fieldState.invalid}
-                            placeholder="Login button not working on mobile"
-                            autoComplete="off"
-                            type="number"
-                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                          />
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </Field>
-                      )}
-                    />
-                    <Controller
-                      name={`startups.${index}.userCount`}
-                      control={form.control}
-                      render={({ field, fieldState }) => (
-                        <Field data-invalid={fieldState.invalid}>
-                          <FieldLabel htmlFor="form-rhf-demo-title">
-                            Startup User Count
-                          </FieldLabel>
-                          <Input
-                            {...field}
-                            aria-invalid={fieldState.invalid}
-                            placeholder="Login button not working on mobile"
-                            autoComplete="off"
-                            type="number"
-                            onChange={(e) => field.onChange(e.target.valueAsNumber)}
-                          />
-                          {fieldState.invalid && (
-                            <FieldError errors={[fieldState.error]} />
-                          )}
-                        </Field>
-                      )}
-                    />
-                  </FieldGroup>
-                  <Button onClick={removeItem} type="button">Remove</Button>
-                </div>
-              ))
-            }
-            
+            <Button type="button" onClick={addItem}>
+              Add Startup
+            </Button>
+            {items.map((item, index) => (
+              <div key={index}>
+                <FieldGroup>
+                  <Controller
+                    name={`startups.${index}.name`}
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="form-rhf-demo-title">
+                          Startup Name
+                        </FieldLabel>
+                        <Input
+                          {...field}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="Login button not working on mobile"
+                          autoComplete="off"
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+                  <Controller
+                    name={`startups.${index}.description`}
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="form-rhf-demo-title">
+                          Startup Description
+                        </FieldLabel>
+                        <Input
+                          {...field}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="Login button not working on mobile"
+                          autoComplete="off"
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+                  <Controller
+                    name={`startups.${index}.navLink`}
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="form-rhf-demo-title">
+                          Startup Link
+                        </FieldLabel>
+                        <Input
+                          {...field}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="Login button not working on mobile"
+                          autoComplete="off"
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+                  <Controller
+                    name={`startups.${index}.revenue`}
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="form-rhf-demo-title">
+                          Startup Revenue
+                        </FieldLabel>
+                        <Input
+                          {...field}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="Login button not working on mobile"
+                          autoComplete="off"
+                          type="number"
+                          onChange={(e) =>
+                            field.onChange(e.target.valueAsNumber)
+                          }
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+                  <Controller
+                    name={`startups.${index}.userCount`}
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="form-rhf-demo-title">
+                          Startup User Count
+                        </FieldLabel>
+                        <Input
+                          {...field}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="Login button not working on mobile"
+                          autoComplete="off"
+                          type="number"
+                          onChange={(e) =>
+                            field.onChange(e.target.valueAsNumber)
+                          }
+                        />
+                        {fieldState.invalid && (
+                          <FieldError errors={[fieldState.error]} />
+                        )}
+                      </Field>
+                    )}
+                  />
+                </FieldGroup>
+                <Button onClick={removeItem} type="button">
+                  Remove
+                </Button>
+              </div>
+            ))}
           </FieldGroup>
-
         </form>
       </CardContent>
       <CardFooter>
-         <Field orientation="horizontal">
+        <Field orientation="horizontal">
           <Button type="button" variant="outline" onClick={() => form.reset()}>
             Reset
           </Button>
@@ -253,7 +259,7 @@ const CreatePageForm = () => {
         </Field>
       </CardFooter>
     </Card>
-  )
-}
+  );
+};
 
-export default CreatePageForm
+export default CreatePageForm;

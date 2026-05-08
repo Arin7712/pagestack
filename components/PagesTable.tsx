@@ -28,8 +28,8 @@ type UserPages = {
 };
 const PagesTable = ({ userPages }: { userPages: UserPages[] }) => {
   return (
-    <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
+    <Table className="border">
+      <TableCaption>A list of your recent indie pages.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Slug</TableHead>

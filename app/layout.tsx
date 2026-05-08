@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist_Mono, Poppins } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/ui/theme-provider";
-import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/sonner"
 import "@/app/globals.css";
 
@@ -39,7 +38,6 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Navbar/>
             {children}
           </ThemeProvider>
           <Toaster/>

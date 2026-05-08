@@ -29,3 +29,17 @@ export  async function CreateUser({name, email, clerkId, profileImage }: UserPro
     }
 }
 
+export async function GetUser(id: string){
+    try{
+        const user = await prisma.user.findUnique({
+            where: {
+                clerkId: id
+            },
+
+        })
+
+        return user;
+    }catch(error){
+        console.log(error)
+    }
+}

@@ -18,5 +18,5 @@ export async function GET(request: Request){
     })
 
     console.log("User created successfully")
-    redirect("/create")
+    redirect("/dashboard")
 }

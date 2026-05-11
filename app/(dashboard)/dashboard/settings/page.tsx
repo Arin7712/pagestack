@@ -13,7 +13,7 @@ const Settings = async() => {
     if(!dbUser)
         redirect("/dashboard")
 
-    const {name, email, profileImage} = dbUser;
+    const {id, name, email, profileImage} = dbUser;
 
     return (
         <main className='w-full'>

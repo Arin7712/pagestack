@@ -27,71 +27,121 @@ import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { editUserSchema } from "@/lib/validations/user";
 import { Input } from "../ui/input";
+import Image from "next/image";
+import { UploadButton } from "@/lib/utils/uploadthing";
+import { Button, buttonVariants } from "../ui/button";
+import { UpdateUser } from "@/lib/user";
 
 type UserSettingsProps = {
-    name: string;
-    email: string;
-    profileImage: string;
-}
+  name: string;
+  clerkId: string
+  email: string;
+  profileImage: string;
+};
 
-const SettingsForm = ({user} : {user : UserSettingsProps}) => {
+const SettingsForm = ({ user }: { user: UserSettingsProps }) => {
+  const form = useForm<z.infer<typeof editUserSchema>>({
+    resolver: zodResolver(editUserSchema),
+    defaultValues: {
+      name: user.name,
+      email: user.email,
+      profileImage: user.profileImage,
+    },
+  });
 
-      const form = useForm<z.infer<typeof editUserSchema>>({
-        resolver: zodResolver(editUserSchema),
-        defaultValues: {
-          name: user.name,
-          email: user.email,
-          profileImage: user.profileImage,
-        },
-      });
+  async function onSubmit(data: z.infer<typeof editUserSchema>) {
+    await UpdateUser(user.clerkId, data);
+    console.log("FORM DATA", data);
+  }
 
-      async function onSubmit(data: z.infer<typeof editUserSchema>) {
-        console.log("FORM DATA", data);
-      }
-    
-      function onError(errors: any) {
-        console.log("FORM ERRORS", errors);
-      }
+  function onError(errors: any) {
+    console.log("FORM ERRORS", errors);
+  }
 
-    return (
-        <main>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Settings</CardTitle>
-                    <CardDescription>Manage your account settings</CardDescription>
-                </CardHeader>
-                <CardContent>
-                    <form id="form-hrf" onSubmit={form.handleSubmit(onSubmit, onError)}>
-                        <FieldGroup>
-                            {/* Name */}
-                            <Controller
-                            name="name"
-                            control={form.control}
-                            render={({ field, fieldState }) => (
-                                <Field data-invalid={fieldState.invalid}>
-                                    <FieldLabel htmlFor="form-rhf-demo-title">
-                                        Name
-                                    </FieldLabel>
-                                    <Input
-                                        {...field}
-                                        aria-invalid={fieldState.invalid}
-                                        placeholder="Enter your name"
-                                        autoComplete="off"
-                                    />
-                                    {fieldState.invalid && (
-                                        <FieldError errors={[fieldState.error]} />
-                                    )}
-                                </Field>
-                            )}
-                            />
-                            {/* Profile Image */}
-                            
-                        </FieldGroup>
-                    </form>
-                </CardContent>
-            </Card>
-        </main>
-    )
-}
+  return (
+    <main>
+      <Card>
+        <CardHeader>
+          <CardTitle>Settings</CardTitle>
+          <CardDescription>Manage your account settings</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form id="form-hrf" onSubmit={form.handleSubmit(onSubmit, onError)}>
+            <FieldGroup>
+              {/* Name */}
+              <Controller
+                name="name"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-rhf-demo-title">Name</FieldLabel>
+                    <Input
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="Enter your name"
+                      autoComplete="off"
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+              {/* Profile Image */}
+              <Image
+                src={user.profileImage}
+                alt="Profile Image"
+                width={50}
+                height={50}
+                className="rounded-full"
+              />
+              <Controller
+                name="profileImage"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <Field data-invalid={fieldState.invalid}>
+                    <FieldLabel htmlFor="form-rhf-demo-title">
+                      Profile Image
+                    </FieldLabel>
+                    <Input type="hidden" {...field} />
 
-export default SettingsForm
+                    <UploadButton
+                      endpoint="imageUploader"
+                      onClientUploadComplete={(res) => {
+                        const uploadedUrl = res[0].ufsUrl;
+
+                        // connect uploadthing to react-hook-form
+                        field.onChange(uploadedUrl);
+
+                        toast.success("Upload Completed");
+                      }}
+                      onUploadError={(error: Error) => {
+                        // Do something with the error.
+                        alert(`ERROR! ${error.message}`);
+                      }}
+                    />
+                    {fieldState.invalid && (
+                      <FieldError errors={[fieldState.error]} />
+                    )}
+                  </Field>
+                )}
+              />
+            </FieldGroup>
+          </form>
+        </CardContent>
+        <CardFooter>
+        <Field orientation="horizontal">
+          <Button type="button" variant="outline" onClick={() => form.reset()}>
+            Reset
+          </Button>
+          <Button type="submit" form="form-hrf">
+            Submit
+          </Button>
+        </Field>
+      </CardFooter>
+      </Card>
+    </main>
+  );
+};
+
+export default SettingsForm;

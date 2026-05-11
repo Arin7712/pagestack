@@ -17,7 +17,7 @@ const Navbar = () => {
       </div>
       <div className='flex items-center justify-center gap-6'>
       <ModeToggle/>
-      <Link href="/dashboard" className={buttonVariants()}>Get started</Link>
+      <Link href="/sign-in" className={buttonVariants()}>Get started</Link>
       </div>
     </main>
   )

@@ -33,11 +33,11 @@ import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 
 type UserCreatePageProps = {
-  profileImage: string;
+  profileImage: string | null;
   clerkId: string;
 };
 const CreatePageForm = ({ user }: { user: UserCreatePageProps }) => {
-  const [favIcon, setFavIcon] = useState<string>(user.profileImage);
+  const [favIcon, setFavIcon] = useState<string>(user.profileImage || '');
 
   const router = useRouter();
 
@@ -93,6 +93,7 @@ const CreatePageForm = ({ user }: { user: UserCreatePageProps }) => {
             {/* Page Favicon */}
 
             <div className="flex items-center justify-between gap-6">
+              
               <Image
                 src={favIcon}
                 alt="Page Favicon"
@@ -265,7 +266,7 @@ const CreatePageForm = ({ user }: { user: UserCreatePageProps }) => {
                   <Image
                     src={
                       form.watch(`startups.${index}.favIcon`) ||
-                      user.profileImage
+                      ''
                     }
                     alt="Profile Image"
                     width={50}

@@ -1,20 +1,21 @@
-import { GetPage } from "@/lib/page"
+import { PageContainer } from "@/components/indie-page/PageContainer";
+import { GetPage } from "@/lib/page";
+import { redirect } from "next/navigation";
 
 interface PageProps {
   params: {
-    slug: string
-  }
+    slug: string;
+  };
 }
 
 export default async function Page({ params }: PageProps) {
-      const { slug } = await params
-      const page = await GetPage(slug)
-    
+  const { slug } = await params;
+  const page = await GetPage(slug);
+  if(!page)
+    redirect("/dashboard")
   return (
-    <div>
-      Slug: {slug}
-      <h1>{page?.pageName}</h1>
-      <h1>{page?.startups[0].name}</h1>
-    </div>
-  )
+    <main className="p-[3rem]">
+      <PageContainer page={page}/>
+    </main>
+  );
 }

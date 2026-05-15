@@ -53,7 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Page: 'Page',
-  Startups: 'Startups'
+  Startup: 'Startup'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -76,8 +76,11 @@ export const UserScalarFieldEnum = {
   id: 'id',
   clerkId: 'clerkId',
   email: 'email',
+  username: 'username',
   name: 'name',
-  profileImage: 'profileImage'
+  profileImage: 'profileImage',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -89,24 +92,30 @@ export const PageScalarFieldEnum = {
   slug: 'slug',
   pageName: 'pageName',
   description: 'description',
-  favIcon: 'favIcon'
+  favIcon: 'favIcon',
+  markdown: 'markdown',
+  renderedHtml: 'renderedHtml',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type PageScalarFieldEnum = (typeof PageScalarFieldEnum)[keyof typeof PageScalarFieldEnum]
 
 
-export const StartupsScalarFieldEnum = {
+export const StartupScalarFieldEnum = {
   id: 'id',
-  authorId: 'authorId',
+  pageId: 'pageId',
   name: 'name',
   description: 'description',
   navLink: 'navLink',
   favIcon: 'favIcon',
   revenue: 'revenue',
-  userCount: 'userCount'
+  userCount: 'userCount',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
-export type StartupsScalarFieldEnum = (typeof StartupsScalarFieldEnum)[keyof typeof StartupsScalarFieldEnum]
+export type StartupScalarFieldEnum = (typeof StartupScalarFieldEnum)[keyof typeof StartupScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -123,4 +132,12 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 

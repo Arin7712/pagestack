@@ -50,7 +50,7 @@ export type User = Prisma.UserModel
  */
 export type Page = Prisma.PageModel
 /**
- * Model Startups
+ * Model Startup
  * 
  */
-export type Startups = Prisma.StartupsModel
+export type Startup = Prisma.StartupModel

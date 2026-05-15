@@ -1,22 +1,12 @@
 "use server";
 
+import z from "zod";
 import { prisma } from "./prisma";
 import { currentUser } from "@clerk/nextjs/server";
+import { formSchema } from "@/lib/validations/form";
+import { renderMarkdown } from "./markdown/render";
 
-type startupsSchema = {
-    name: string,
-    description: string,
-    navLink: string,
-    favIcon: string,
-    revenue: number,
-    userCount: number
-}
-type formSchema = {
-    name : string,
-    description: string,
-    favIcon: string,
-    startups: startupsSchema[]
-}
+type formData = z.infer<typeof formSchema>
 
 function generateSlug(name: string) {
   return name
@@ -25,24 +15,29 @@ function generateSlug(name: string) {
     .replace(/[^\w-]+/g, "")
 }
 
-export async function CreatePage(data : formSchema){
+export async function CreatePage(data : formData){
 
     const user = await currentUser();
     if(!user)
         return;
 
     try{
+
+        const renderedHtml = await renderMarkdown(data.markdown);
+
         const page = await prisma.page.create({
             data : {
                 slug: generateSlug(data.name),
                 pageName: data.name,
                 description: data.description,
+                markdown: data.markdown,
+                renderedHtml,
                 favIcon: data.favIcon,
                 authorId: user?.id
             }
         })
 
-        const startup = await prisma.startups.createMany({
+        const startup = await prisma.startup.createMany({
             data: data.startups.map(startup => ({
                 name: startup.name,
                 description: startup.description,
@@ -50,7 +45,7 @@ export async function CreatePage(data : formSchema){
                 favIcon: startup.favIcon,
                 revenue: startup.revenue,
                 userCount: startup.userCount,
-                authorId: page.id
+                pageId: page.id
             }))
         })
 

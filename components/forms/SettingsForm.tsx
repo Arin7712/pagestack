@@ -40,12 +40,15 @@ type UserSettingsProps = {
 };
 
 const SettingsForm = ({ user }: { user: UserSettingsProps }) => {
+
+  const [profileImage, setProfileImage] = useState<string>(user.profileImage);
+
   const form = useForm<z.infer<typeof editUserSchema>>({
     resolver: zodResolver(editUserSchema),
     defaultValues: {
       name: user.name,
       email: user.email,
-      profileImage: user.profileImage,
+      profileImage: profileImage,
     },
   });
 
@@ -89,7 +92,7 @@ const SettingsForm = ({ user }: { user: UserSettingsProps }) => {
               />
               {/* Profile Image */}
               <Image
-                src={user.profileImage}
+                src={profileImage}
                 alt="Profile Image"
                 width={50}
                 height={50}
@@ -107,10 +110,11 @@ const SettingsForm = ({ user }: { user: UserSettingsProps }) => {
 
                     <UploadButton
                       endpoint="imageUploader"
-                      onClientUploadComplete={(res) => {
+                      onClientUploadComplete={async(res) => {
                         const uploadedUrl = res[0].ufsUrl;
 
                         // connect uploadthing to react-hook-form
+                        setProfileImage(uploadedUrl);
                         field.onChange(uploadedUrl);
 
                         toast.success("Upload Completed");
@@ -135,7 +139,7 @@ const SettingsForm = ({ user }: { user: UserSettingsProps }) => {
             Reset
           </Button>
           <Button type="submit" form="form-hrf">
-            Submit
+            Save Changes
           </Button>
         </Field>
       </CardFooter>

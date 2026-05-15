@@ -20,36 +20,34 @@ export type PageModel = runtime.Types.Result.DefaultSelection<Prisma.$PagePayloa
 
 export type AggregatePage = {
   _count: PageCountAggregateOutputType | null
-  _avg: PageAvgAggregateOutputType | null
-  _sum: PageSumAggregateOutputType | null
   _min: PageMinAggregateOutputType | null
   _max: PageMaxAggregateOutputType | null
 }
 
-export type PageAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type PageSumAggregateOutputType = {
-  id: number | null
-}
-
 export type PageMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   authorId: string | null
   slug: string | null
   pageName: string | null
   description: string | null
   favIcon: string | null
+  markdown: string | null
+  renderedHtml: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type PageMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   authorId: string | null
   slug: string | null
   pageName: string | null
   description: string | null
   favIcon: string | null
+  markdown: string | null
+  renderedHtml: string | null
+  createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type PageCountAggregateOutputType = {
@@ -59,17 +57,13 @@ export type PageCountAggregateOutputType = {
   pageName: number
   description: number
   favIcon: number
+  markdown: number
+  renderedHtml: number
+  createdAt: number
+  updatedAt: number
   _all: number
 }
 
-
-export type PageAvgAggregateInputType = {
-  id?: true
-}
-
-export type PageSumAggregateInputType = {
-  id?: true
-}
 
 export type PageMinAggregateInputType = {
   id?: true
@@ -78,6 +72,10 @@ export type PageMinAggregateInputType = {
   pageName?: true
   description?: true
   favIcon?: true
+  markdown?: true
+  renderedHtml?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type PageMaxAggregateInputType = {
@@ -87,6 +85,10 @@ export type PageMaxAggregateInputType = {
   pageName?: true
   description?: true
   favIcon?: true
+  markdown?: true
+  renderedHtml?: true
+  createdAt?: true
+  updatedAt?: true
 }
 
 export type PageCountAggregateInputType = {
@@ -96,6 +98,10 @@ export type PageCountAggregateInputType = {
   pageName?: true
   description?: true
   favIcon?: true
+  markdown?: true
+  renderedHtml?: true
+  createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -137,18 +143,6 @@ export type PageAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: PageAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: PageSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: PageMinAggregateInputType
@@ -179,22 +173,22 @@ export type PageGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
   take?: number
   skip?: number
   _count?: PageCountAggregateInputType | true
-  _avg?: PageAvgAggregateInputType
-  _sum?: PageSumAggregateInputType
   _min?: PageMinAggregateInputType
   _max?: PageMaxAggregateInputType
 }
 
 export type PageGroupByOutputType = {
-  id: number
+  id: string
   authorId: string
   slug: string
   pageName: string
   description: string
-  favIcon: string
+  favIcon: string | null
+  markdown: string
+  renderedHtml: string
+  createdAt: Date
+  updatedAt: Date
   _count: PageCountAggregateOutputType | null
-  _avg: PageAvgAggregateOutputType | null
-  _sum: PageSumAggregateOutputType | null
   _min: PageMinAggregateOutputType | null
   _max: PageMaxAggregateOutputType | null
 }
@@ -218,13 +212,17 @@ export type PageWhereInput = {
   AND?: Prisma.PageWhereInput | Prisma.PageWhereInput[]
   OR?: Prisma.PageWhereInput[]
   NOT?: Prisma.PageWhereInput | Prisma.PageWhereInput[]
-  id?: Prisma.IntFilter<"Page"> | number
+  id?: Prisma.StringFilter<"Page"> | string
   authorId?: Prisma.StringFilter<"Page"> | string
   slug?: Prisma.StringFilter<"Page"> | string
   pageName?: Prisma.StringFilter<"Page"> | string
   description?: Prisma.StringFilter<"Page"> | string
-  favIcon?: Prisma.StringFilter<"Page"> | string
-  startups?: Prisma.StartupsListRelationFilter
+  favIcon?: Prisma.StringNullableFilter<"Page"> | string | null
+  markdown?: Prisma.StringFilter<"Page"> | string
+  renderedHtml?: Prisma.StringFilter<"Page"> | string
+  createdAt?: Prisma.DateTimeFilter<"Page"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Page"> | Date | string
+  startups?: Prisma.StartupListRelationFilter
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
@@ -234,13 +232,17 @@ export type PageOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   pageName?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  favIcon?: Prisma.SortOrder
-  startups?: Prisma.StartupsOrderByRelationAggregateInput
+  favIcon?: Prisma.SortOrderInput | Prisma.SortOrder
+  markdown?: Prisma.SortOrder
+  renderedHtml?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
+  startups?: Prisma.StartupOrderByRelationAggregateInput
   author?: Prisma.UserOrderByWithRelationInput
 }
 
 export type PageWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   slug?: string
   AND?: Prisma.PageWhereInput | Prisma.PageWhereInput[]
   OR?: Prisma.PageWhereInput[]
@@ -248,8 +250,12 @@ export type PageWhereUniqueInput = Prisma.AtLeast<{
   authorId?: Prisma.StringFilter<"Page"> | string
   pageName?: Prisma.StringFilter<"Page"> | string
   description?: Prisma.StringFilter<"Page"> | string
-  favIcon?: Prisma.StringFilter<"Page"> | string
-  startups?: Prisma.StartupsListRelationFilter
+  favIcon?: Prisma.StringNullableFilter<"Page"> | string | null
+  markdown?: Prisma.StringFilter<"Page"> | string
+  renderedHtml?: Prisma.StringFilter<"Page"> | string
+  createdAt?: Prisma.DateTimeFilter<"Page"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Page"> | Date | string
+  startups?: Prisma.StartupListRelationFilter
   author?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }, "id" | "slug">
 
@@ -259,87 +265,124 @@ export type PageOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   pageName?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  favIcon?: Prisma.SortOrder
+  favIcon?: Prisma.SortOrderInput | Prisma.SortOrder
+  markdown?: Prisma.SortOrder
+  renderedHtml?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.PageCountOrderByAggregateInput
-  _avg?: Prisma.PageAvgOrderByAggregateInput
   _max?: Prisma.PageMaxOrderByAggregateInput
   _min?: Prisma.PageMinOrderByAggregateInput
-  _sum?: Prisma.PageSumOrderByAggregateInput
 }
 
 export type PageScalarWhereWithAggregatesInput = {
   AND?: Prisma.PageScalarWhereWithAggregatesInput | Prisma.PageScalarWhereWithAggregatesInput[]
   OR?: Prisma.PageScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PageScalarWhereWithAggregatesInput | Prisma.PageScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Page"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Page"> | string
   authorId?: Prisma.StringWithAggregatesFilter<"Page"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Page"> | string
   pageName?: Prisma.StringWithAggregatesFilter<"Page"> | string
   description?: Prisma.StringWithAggregatesFilter<"Page"> | string
-  favIcon?: Prisma.StringWithAggregatesFilter<"Page"> | string
+  favIcon?: Prisma.StringNullableWithAggregatesFilter<"Page"> | string | null
+  markdown?: Prisma.StringWithAggregatesFilter<"Page"> | string
+  renderedHtml?: Prisma.StringWithAggregatesFilter<"Page"> | string
+  createdAt?: Prisma.DateTimeWithAggregatesFilter<"Page"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Page"> | Date | string
 }
 
 export type PageCreateInput = {
+  id?: string
   slug: string
   pageName: string
   description: string
-  favIcon: string
-  startups?: Prisma.StartupsCreateNestedManyWithoutAuthorInput
+  favIcon?: string | null
+  markdown: string
+  renderedHtml: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  startups?: Prisma.StartupCreateNestedManyWithoutPageInput
   author: Prisma.UserCreateNestedOneWithoutPagesInput
 }
 
 export type PageUncheckedCreateInput = {
-  id?: number
+  id?: string
   authorId: string
   slug: string
   pageName: string
   description: string
-  favIcon: string
-  startups?: Prisma.StartupsUncheckedCreateNestedManyWithoutAuthorInput
+  favIcon?: string | null
+  markdown: string
+  renderedHtml: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  startups?: Prisma.StartupUncheckedCreateNestedManyWithoutPageInput
 }
 
 export type PageUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
-  startups?: Prisma.StartupsUpdateManyWithoutAuthorNestedInput
+  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  markdown?: Prisma.StringFieldUpdateOperationsInput | string
+  renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startups?: Prisma.StartupUpdateManyWithoutPageNestedInput
   author?: Prisma.UserUpdateOneRequiredWithoutPagesNestedInput
 }
 
 export type PageUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
-  startups?: Prisma.StartupsUncheckedUpdateManyWithoutAuthorNestedInput
+  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  markdown?: Prisma.StringFieldUpdateOperationsInput | string
+  renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startups?: Prisma.StartupUncheckedUpdateManyWithoutPageNestedInput
 }
 
 export type PageCreateManyInput = {
-  id?: number
+  id?: string
   authorId: string
   slug: string
   pageName: string
   description: string
-  favIcon: string
+  favIcon?: string | null
+  markdown: string
+  renderedHtml: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type PageUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
+  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  markdown?: Prisma.StringFieldUpdateOperationsInput | string
+  renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PageUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
+  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  markdown?: Prisma.StringFieldUpdateOperationsInput | string
+  renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PageListRelationFilter = {
@@ -359,10 +402,10 @@ export type PageCountOrderByAggregateInput = {
   pageName?: Prisma.SortOrder
   description?: Prisma.SortOrder
   favIcon?: Prisma.SortOrder
-}
-
-export type PageAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
+  markdown?: Prisma.SortOrder
+  renderedHtml?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type PageMaxOrderByAggregateInput = {
@@ -372,6 +415,10 @@ export type PageMaxOrderByAggregateInput = {
   pageName?: Prisma.SortOrder
   description?: Prisma.SortOrder
   favIcon?: Prisma.SortOrder
+  markdown?: Prisma.SortOrder
+  renderedHtml?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type PageMinOrderByAggregateInput = {
@@ -381,10 +428,10 @@ export type PageMinOrderByAggregateInput = {
   pageName?: Prisma.SortOrder
   description?: Prisma.SortOrder
   favIcon?: Prisma.SortOrder
-}
-
-export type PageSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
+  markdown?: Prisma.SortOrder
+  renderedHtml?: Prisma.SortOrder
+  createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type PageScalarRelationFilter = {
@@ -449,20 +496,29 @@ export type PageUpdateOneRequiredWithoutStartupsNestedInput = {
 }
 
 export type PageCreateWithoutAuthorInput = {
+  id?: string
   slug: string
   pageName: string
   description: string
-  favIcon: string
-  startups?: Prisma.StartupsCreateNestedManyWithoutAuthorInput
+  favIcon?: string | null
+  markdown: string
+  renderedHtml: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  startups?: Prisma.StartupCreateNestedManyWithoutPageInput
 }
 
 export type PageUncheckedCreateWithoutAuthorInput = {
-  id?: number
+  id?: string
   slug: string
   pageName: string
   description: string
-  favIcon: string
-  startups?: Prisma.StartupsUncheckedCreateNestedManyWithoutAuthorInput
+  favIcon?: string | null
+  markdown: string
+  renderedHtml: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  startups?: Prisma.StartupUncheckedCreateNestedManyWithoutPageInput
 }
 
 export type PageCreateOrConnectWithoutAuthorInput = {
@@ -495,29 +551,42 @@ export type PageScalarWhereInput = {
   AND?: Prisma.PageScalarWhereInput | Prisma.PageScalarWhereInput[]
   OR?: Prisma.PageScalarWhereInput[]
   NOT?: Prisma.PageScalarWhereInput | Prisma.PageScalarWhereInput[]
-  id?: Prisma.IntFilter<"Page"> | number
+  id?: Prisma.StringFilter<"Page"> | string
   authorId?: Prisma.StringFilter<"Page"> | string
   slug?: Prisma.StringFilter<"Page"> | string
   pageName?: Prisma.StringFilter<"Page"> | string
   description?: Prisma.StringFilter<"Page"> | string
-  favIcon?: Prisma.StringFilter<"Page"> | string
+  favIcon?: Prisma.StringNullableFilter<"Page"> | string | null
+  markdown?: Prisma.StringFilter<"Page"> | string
+  renderedHtml?: Prisma.StringFilter<"Page"> | string
+  createdAt?: Prisma.DateTimeFilter<"Page"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Page"> | Date | string
 }
 
 export type PageCreateWithoutStartupsInput = {
+  id?: string
   slug: string
   pageName: string
   description: string
-  favIcon: string
+  favIcon?: string | null
+  markdown: string
+  renderedHtml: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
   author: Prisma.UserCreateNestedOneWithoutPagesInput
 }
 
 export type PageUncheckedCreateWithoutStartupsInput = {
-  id?: number
+  id?: string
   authorId: string
   slug: string
   pageName: string
   description: string
-  favIcon: string
+  favIcon?: string | null
+  markdown: string
+  renderedHtml: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type PageCreateOrConnectWithoutStartupsInput = {
@@ -537,53 +606,79 @@ export type PageUpdateToOneWithWhereWithoutStartupsInput = {
 }
 
 export type PageUpdateWithoutStartupsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
+  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  markdown?: Prisma.StringFieldUpdateOperationsInput | string
+  renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   author?: Prisma.UserUpdateOneRequiredWithoutPagesNestedInput
 }
 
 export type PageUncheckedUpdateWithoutStartupsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   authorId?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
+  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  markdown?: Prisma.StringFieldUpdateOperationsInput | string
+  renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PageCreateManyAuthorInput = {
-  id?: number
+  id?: string
   slug: string
   pageName: string
   description: string
-  favIcon: string
+  favIcon?: string | null
+  markdown: string
+  renderedHtml: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type PageUpdateWithoutAuthorInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
-  startups?: Prisma.StartupsUpdateManyWithoutAuthorNestedInput
+  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  markdown?: Prisma.StringFieldUpdateOperationsInput | string
+  renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startups?: Prisma.StartupUpdateManyWithoutPageNestedInput
 }
 
 export type PageUncheckedUpdateWithoutAuthorInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
-  startups?: Prisma.StartupsUncheckedUpdateManyWithoutAuthorNestedInput
+  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  markdown?: Prisma.StringFieldUpdateOperationsInput | string
+  renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startups?: Prisma.StartupUncheckedUpdateManyWithoutPageNestedInput
 }
 
 export type PageUncheckedUpdateManyWithoutAuthorInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
+  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  markdown?: Prisma.StringFieldUpdateOperationsInput | string
+  renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -613,7 +708,7 @@ export type PageCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensi
  * PageCountOutputType without action
  */
 export type PageCountOutputTypeCountStartupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.StartupsWhereInput
+  where?: Prisma.StartupWhereInput
 }
 
 
@@ -624,6 +719,10 @@ export type PageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   pageName?: boolean
   description?: boolean
   favIcon?: boolean
+  markdown?: boolean
+  renderedHtml?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   startups?: boolean | Prisma.Page$startupsArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.PageCountOutputTypeDefaultArgs<ExtArgs>
@@ -636,6 +735,10 @@ export type PageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   pageName?: boolean
   description?: boolean
   favIcon?: boolean
+  markdown?: boolean
+  renderedHtml?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["page"]>
 
@@ -646,6 +749,10 @@ export type PageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   pageName?: boolean
   description?: boolean
   favIcon?: boolean
+  markdown?: boolean
+  renderedHtml?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["page"]>
 
@@ -656,9 +763,13 @@ export type PageSelectScalar = {
   pageName?: boolean
   description?: boolean
   favIcon?: boolean
+  markdown?: boolean
+  renderedHtml?: boolean
+  createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type PageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "authorId" | "slug" | "pageName" | "description" | "favIcon", ExtArgs["result"]["page"]>
+export type PageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "authorId" | "slug" | "pageName" | "description" | "favIcon" | "markdown" | "renderedHtml" | "createdAt" | "updatedAt", ExtArgs["result"]["page"]>
 export type PageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   startups?: boolean | Prisma.Page$startupsArgs<ExtArgs>
   author?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -674,16 +785,20 @@ export type PageIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
 export type $PagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Page"
   objects: {
-    startups: Prisma.$StartupsPayload<ExtArgs>[]
+    startups: Prisma.$StartupPayload<ExtArgs>[]
     author: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     authorId: string
     slug: string
     pageName: string
     description: string
-    favIcon: string
+    favIcon: string | null
+    markdown: string
+    renderedHtml: string
+    createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["page"]>
   composites: {}
 }
@@ -1078,7 +1193,7 @@ readonly fields: PageFieldRefs;
  */
 export interface Prisma__PageClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  startups<T extends Prisma.Page$startupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Page$startupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StartupsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  startups<T extends Prisma.Page$startupsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Page$startupsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StartupPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   author<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1109,12 +1224,16 @@ export interface Prisma__PageClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the Page model
  */
 export interface PageFieldRefs {
-  readonly id: Prisma.FieldRef<"Page", 'Int'>
+  readonly id: Prisma.FieldRef<"Page", 'String'>
   readonly authorId: Prisma.FieldRef<"Page", 'String'>
   readonly slug: Prisma.FieldRef<"Page", 'String'>
   readonly pageName: Prisma.FieldRef<"Page", 'String'>
   readonly description: Prisma.FieldRef<"Page", 'String'>
   readonly favIcon: Prisma.FieldRef<"Page", 'String'>
+  readonly markdown: Prisma.FieldRef<"Page", 'String'>
+  readonly renderedHtml: Prisma.FieldRef<"Page", 'String'>
+  readonly createdAt: Prisma.FieldRef<"Page", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Page", 'DateTime'>
 }
     
 
@@ -1515,23 +1634,23 @@ export type PageDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
  */
 export type Page$startupsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
-   * Select specific fields to fetch from the Startups
+   * Select specific fields to fetch from the Startup
    */
-  select?: Prisma.StartupsSelect<ExtArgs> | null
+  select?: Prisma.StartupSelect<ExtArgs> | null
   /**
-   * Omit specific fields from the Startups
+   * Omit specific fields from the Startup
    */
-  omit?: Prisma.StartupsOmit<ExtArgs> | null
+  omit?: Prisma.StartupOmit<ExtArgs> | null
   /**
    * Choose, which related nodes to fetch as well
    */
-  include?: Prisma.StartupsInclude<ExtArgs> | null
-  where?: Prisma.StartupsWhereInput
-  orderBy?: Prisma.StartupsOrderByWithRelationInput | Prisma.StartupsOrderByWithRelationInput[]
-  cursor?: Prisma.StartupsWhereUniqueInput
+  include?: Prisma.StartupInclude<ExtArgs> | null
+  where?: Prisma.StartupWhereInput
+  orderBy?: Prisma.StartupOrderByWithRelationInput | Prisma.StartupOrderByWithRelationInput[]
+  cursor?: Prisma.StartupWhereUniqueInput
   take?: number
   skip?: number
-  distinct?: Prisma.StartupsScalarFieldEnum | Prisma.StartupsScalarFieldEnum[]
+  distinct?: Prisma.StartupScalarFieldEnum | Prisma.StartupScalarFieldEnum[]
 }
 
 /**

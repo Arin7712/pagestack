@@ -13,34 +13,51 @@ datasource db {
   provider = "postgresql"
 }
 
-model User { 
-  id    Int     @id @default(autoincrement())
-  clerkId String @unique
-  email String  @unique
-  name  String
-  profileImage String
-  pages Page[]
-} 
+model User {
+  id           String @id @default(cuid())
+  clerkId      String @unique
+  email        String @unique
+  username     String? @unique
+  name         String
+  profileImage String?
 
-model Page {
-  id Int @id @default(autoincrement())
-  authorId String
-  slug String @unique
-  pageName String
-  description String
-  favIcon String
-  startups Startups[]
-  author User @relation(fields: [authorId], references: [clerkId])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  pages     Page[]
 }
 
-model Startups {
-  id Int @id @default(autoincrement()) 
-  authorId Int
-  name String
-  description String
-  navLink String
-  favIcon String
-  revenue Int
-  userCount Int
-  author Page @relation(fields: [authorId], references: [id])
+model Page {
+  id       String @id @default(cuid())
+  authorId String
+  slug     String @unique
+
+  pageName    String
+  description String  @db.Text
+  favIcon     String?
+
+  markdown     String @db.Text
+  renderedHtml String @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  startups Startup[]
+  author   User      @relation(fields: [authorId], references: [clerkId], onDelete: Cascade)
+
+  @@index([authorId])
+}
+
+model Startup {
+  id          Int     @id @default(autoincrement())
+  pageId      String
+  name        String
+  description String  @db.Text
+  navLink     String?
+  favIcon     String?
+  revenue     Int?
+  userCount   Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  page      Page     @relation(fields: [pageId], references: [id], onDelete: Cascade)
 }

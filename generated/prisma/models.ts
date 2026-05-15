@@ -10,5 +10,5 @@
  */
 export type * from './models/User'
 export type * from './models/Page'
-export type * from './models/Startups'
+export type * from './models/Startup'
 export type * from './commonInputTypes'

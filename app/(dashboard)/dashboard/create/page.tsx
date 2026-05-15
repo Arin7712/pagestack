@@ -1,10 +1,23 @@
 import CreatePageForm from '@/components/forms/CreatePageForm'
+import { GetUser } from '@/lib/user';
+import { currentUser } from '@clerk/nextjs/server';
 import React from 'react'
 
-const Create = () => {
+const Create = async() => {
+
+  const user = await currentUser();
+  if(!user)
+    return
+
+  const dbUser = await GetUser(user.id);
+  if(!dbUser)
+    return
+
+  const {profileImage, clerkId} = dbUser;
+
   return (
     <main className='w-full'>
-      <CreatePageForm/>
+      <CreatePageForm user={dbUser}/>
     </main>
   )
 }

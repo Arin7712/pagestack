@@ -1,30 +1,21 @@
+import { Prisma } from "@/generated/prisma/client";
 import Image from "next/image";
 
-type startupsSchema = {
-  name: string;
-  description: string;
-  navLink: string;
-  favIcon: string;
-  revenue: number;
-  userCount: number;
-};
-type formSchema = {
-  pageName: string;
-  slug: string;
-  description: string;
-  renderedHtml: string;
-  favIcon: string;
-  startups: startupsSchema[];
-};
 
-export const PageContainer = ({ page }: { page: formSchema }) => {
+type PageContainerProps = Prisma.PageGetPayload<{
+  include: {
+    startups: true;
+  };
+}>;
+
+export const PageContainer = ({ page }: { page: PageContainerProps }) => {
   return (
     <div className="flex items-center justify-between">
       <div>
         slug: {page.slug}
         <div className="flex flex-col gap-6">
           <Image
-            src={page.favIcon}
+            src={page.favIcon || ""}
             alt="Profile Image"
             width={100}
             height={100}

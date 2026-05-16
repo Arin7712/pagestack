@@ -31,12 +31,11 @@ import Image from "next/image";
 
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
+import { Page, User } from "@/generated/prisma/client";
 
-type UserCreatePageProps = {
-  profileImage: string | null;
-  clerkId: string;
-};
-const CreatePageForm = ({ user }: { user: UserCreatePageProps }) => {
+
+type CreatePageProps = User;
+const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
   const [favIcon, setFavIcon] = useState<string>(user.profileImage || '');
 
   const router = useRouter();

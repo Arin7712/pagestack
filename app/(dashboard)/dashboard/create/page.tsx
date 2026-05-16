@@ -13,8 +13,6 @@ const Create = async() => {
   if(!dbUser)
     return
 
-  const {profileImage, clerkId} = dbUser;
-
   return (
     <main className='w-full'>
       <CreatePageForm user={dbUser}/>

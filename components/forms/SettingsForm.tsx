@@ -1,6 +1,5 @@
 "use client";
 
-import { formSchema } from "@/lib/validations/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
@@ -22,32 +21,25 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { useState } from "react";
-import { CreatePage } from "@/lib/page";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
 import { editUserSchema } from "@/lib/validations/user";
 import { Input } from "../ui/input";
 import Image from "next/image";
 import { UploadButton } from "@/lib/utils/uploadthing";
-import { Button, buttonVariants } from "../ui/button";
+import { Button } from "../ui/button";
 import { UpdateUser } from "@/lib/user";
+import { User } from "@/generated/prisma/client";
 
-type UserSettingsProps = {
-  name: string;
-  clerkId: string
-  email: string;
-  profileImage: string;
-};
+type UserSettingsProps = User;
 
 const SettingsForm = ({ user }: { user: UserSettingsProps }) => {
 
-  const [profileImage, setProfileImage] = useState<string>(user.profileImage);
+  const [profileImage, setProfileImage] = useState<string>(user.profileImage || '');
 
   const form = useForm<z.infer<typeof editUserSchema>>({
     resolver: zodResolver(editUserSchema),
     defaultValues: {
       name: user.name,
-      email: user.email,
       profileImage: profileImage,
     },
   });

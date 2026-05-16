@@ -50,7 +50,7 @@ export  async function CreateUser({name, email, clerkId, profileImage }: UserPro
     }
 }
 
-export async function UpdateUser(id: string,data: {name: string, email: string, profileImage: string}) {
+export async function UpdateUser(id: string,data: {name: string, profileImage?: string}) {
     try{    
         const user = await prisma.user.update({
             where: {
@@ -58,7 +58,6 @@ export async function UpdateUser(id: string,data: {name: string, email: string, 
             },
             data: {
                 name: data.name,
-                email: data.email,
                 profileImage: data.profileImage
             }
         })

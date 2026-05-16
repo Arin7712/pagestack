@@ -31,7 +31,7 @@ import Image from "next/image";
 
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
-import { Page, User } from "@/generated/prisma/client";
+import { User } from "@/generated/prisma/client";
 
 
 type CreatePageProps = User;
@@ -172,6 +172,7 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                     placeholder="Login button not working on mobile"
                     autoComplete="off"
                   />
+                  <FieldDescription>Enter a brief description of your indie-page.</FieldDescription>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}

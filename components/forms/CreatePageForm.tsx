@@ -2,7 +2,7 @@
 
 import { formSchema } from "@/lib/validations/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, FieldErrors, useFieldArray, useForm } from "react-hook-form";
 import z from "zod";
 
 import { Button } from "../ui/button";
@@ -35,8 +35,9 @@ import { User } from "@/generated/prisma/client";
 
 
 type CreatePageProps = User;
+
 const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
-  const [favIcon, setFavIcon] = useState<string>(user.profileImage || '');
+  const [favIcon, setFavIcon] = useState<string>(user.profileImage || '/user-avatar.png');
 
   const router = useRouter();
 
@@ -72,7 +73,7 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
     console.log("FORM DATA", data);
   }
 
-  function onError(errors: any) {
+  function onError(errors: FieldErrors<typeof formSchema>) {
     console.log("FORM ERRORS", errors);
   }
 
@@ -148,7 +149,7 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                   <Input
                     {...field}
                     aria-invalid={fieldState.invalid}
-                    placeholder="Login button not working on mobile"
+                    placeholder="John Doe"
                     autoComplete="off"
                   />
                   {fieldState.invalid && (
@@ -266,7 +267,7 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                   <Image
                     src={
                       form.watch(`startups.${index}.favIcon`) ||
-                      ''
+                      '/user-avatar.png'
                     }
                     alt="Profile Image"
                     width={50}

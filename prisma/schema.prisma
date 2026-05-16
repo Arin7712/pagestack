@@ -33,7 +33,7 @@ model Page {
 
   pageName    String
   description String  @db.Text
-  favIcon     String?
+  favIcon     String
 
   markdown     String @db.Text
   renderedHtml String @db.Text

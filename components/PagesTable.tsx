@@ -8,24 +8,14 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import { Prisma } from "@/generated/prisma/client";
 
-type Startups = {
-  id: number;
-  name: string;
-  description: string;
-  navLink: string;
-  favIcon: string;
-  revenue: number;
-  userCount: number;
-};
-type UserPages = {
-  id: number;
-  slug: string;
-  pageName: string;
-  description: string;
-  favIcon: string;
-  startups: Startups[];
-};
+
+type UserPages = Prisma.PageGetPayload<{
+  include: {
+    startups: true;
+  };
+}>;
 
 const PagesTable = ({ userPages }: { userPages: UserPages[] }) => {
   return (

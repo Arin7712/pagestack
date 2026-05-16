@@ -23,6 +23,7 @@ export default async function Page() {
       if (!user) return;
     
       const userPages = await GetPages(user.id);
+
       console.log("USER PAGES", userPages);
 
   return (

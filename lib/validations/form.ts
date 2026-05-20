@@ -52,7 +52,10 @@ export const formSchema = z.object({
     .min(6, "Page description is too short")
     .max(MAX_DESCRIPTION_LENGTH, "Page description is too long"),
 
-  favIcon: optionalUrl,
+  favIcon: z
+  .string()
+  .trim()
+  .url("Must be a valid URL"),
 
   markdown: z.string().trim().min(1, "Markdown is too short"),
 

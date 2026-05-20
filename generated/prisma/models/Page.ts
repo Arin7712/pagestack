@@ -183,7 +183,7 @@ export type PageGroupByOutputType = {
   slug: string
   pageName: string
   description: string
-  favIcon: string | null
+  favIcon: string
   markdown: string
   renderedHtml: string
   createdAt: Date
@@ -217,7 +217,7 @@ export type PageWhereInput = {
   slug?: Prisma.StringFilter<"Page"> | string
   pageName?: Prisma.StringFilter<"Page"> | string
   description?: Prisma.StringFilter<"Page"> | string
-  favIcon?: Prisma.StringNullableFilter<"Page"> | string | null
+  favIcon?: Prisma.StringFilter<"Page"> | string
   markdown?: Prisma.StringFilter<"Page"> | string
   renderedHtml?: Prisma.StringFilter<"Page"> | string
   createdAt?: Prisma.DateTimeFilter<"Page"> | Date | string
@@ -232,7 +232,7 @@ export type PageOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   pageName?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  favIcon?: Prisma.SortOrderInput | Prisma.SortOrder
+  favIcon?: Prisma.SortOrder
   markdown?: Prisma.SortOrder
   renderedHtml?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -250,7 +250,7 @@ export type PageWhereUniqueInput = Prisma.AtLeast<{
   authorId?: Prisma.StringFilter<"Page"> | string
   pageName?: Prisma.StringFilter<"Page"> | string
   description?: Prisma.StringFilter<"Page"> | string
-  favIcon?: Prisma.StringNullableFilter<"Page"> | string | null
+  favIcon?: Prisma.StringFilter<"Page"> | string
   markdown?: Prisma.StringFilter<"Page"> | string
   renderedHtml?: Prisma.StringFilter<"Page"> | string
   createdAt?: Prisma.DateTimeFilter<"Page"> | Date | string
@@ -265,7 +265,7 @@ export type PageOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   pageName?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  favIcon?: Prisma.SortOrderInput | Prisma.SortOrder
+  favIcon?: Prisma.SortOrder
   markdown?: Prisma.SortOrder
   renderedHtml?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -284,7 +284,7 @@ export type PageScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringWithAggregatesFilter<"Page"> | string
   pageName?: Prisma.StringWithAggregatesFilter<"Page"> | string
   description?: Prisma.StringWithAggregatesFilter<"Page"> | string
-  favIcon?: Prisma.StringNullableWithAggregatesFilter<"Page"> | string | null
+  favIcon?: Prisma.StringWithAggregatesFilter<"Page"> | string
   markdown?: Prisma.StringWithAggregatesFilter<"Page"> | string
   renderedHtml?: Prisma.StringWithAggregatesFilter<"Page"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Page"> | Date | string
@@ -296,7 +296,7 @@ export type PageCreateInput = {
   slug: string
   pageName: string
   description: string
-  favIcon?: string | null
+  favIcon: string
   markdown: string
   renderedHtml: string
   createdAt?: Date | string
@@ -311,7 +311,7 @@ export type PageUncheckedCreateInput = {
   slug: string
   pageName: string
   description: string
-  favIcon?: string | null
+  favIcon: string
   markdown: string
   renderedHtml: string
   createdAt?: Date | string
@@ -324,7 +324,7 @@ export type PageUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   markdown?: Prisma.StringFieldUpdateOperationsInput | string
   renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -339,7 +339,7 @@ export type PageUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   markdown?: Prisma.StringFieldUpdateOperationsInput | string
   renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -353,7 +353,7 @@ export type PageCreateManyInput = {
   slug: string
   pageName: string
   description: string
-  favIcon?: string | null
+  favIcon: string
   markdown: string
   renderedHtml: string
   createdAt?: Date | string
@@ -365,7 +365,7 @@ export type PageUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   markdown?: Prisma.StringFieldUpdateOperationsInput | string
   renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -378,7 +378,7 @@ export type PageUncheckedUpdateManyInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   markdown?: Prisma.StringFieldUpdateOperationsInput | string
   renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -500,7 +500,7 @@ export type PageCreateWithoutAuthorInput = {
   slug: string
   pageName: string
   description: string
-  favIcon?: string | null
+  favIcon: string
   markdown: string
   renderedHtml: string
   createdAt?: Date | string
@@ -513,7 +513,7 @@ export type PageUncheckedCreateWithoutAuthorInput = {
   slug: string
   pageName: string
   description: string
-  favIcon?: string | null
+  favIcon: string
   markdown: string
   renderedHtml: string
   createdAt?: Date | string
@@ -556,7 +556,7 @@ export type PageScalarWhereInput = {
   slug?: Prisma.StringFilter<"Page"> | string
   pageName?: Prisma.StringFilter<"Page"> | string
   description?: Prisma.StringFilter<"Page"> | string
-  favIcon?: Prisma.StringNullableFilter<"Page"> | string | null
+  favIcon?: Prisma.StringFilter<"Page"> | string
   markdown?: Prisma.StringFilter<"Page"> | string
   renderedHtml?: Prisma.StringFilter<"Page"> | string
   createdAt?: Prisma.DateTimeFilter<"Page"> | Date | string
@@ -568,7 +568,7 @@ export type PageCreateWithoutStartupsInput = {
   slug: string
   pageName: string
   description: string
-  favIcon?: string | null
+  favIcon: string
   markdown: string
   renderedHtml: string
   createdAt?: Date | string
@@ -582,7 +582,7 @@ export type PageUncheckedCreateWithoutStartupsInput = {
   slug: string
   pageName: string
   description: string
-  favIcon?: string | null
+  favIcon: string
   markdown: string
   renderedHtml: string
   createdAt?: Date | string
@@ -610,7 +610,7 @@ export type PageUpdateWithoutStartupsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   markdown?: Prisma.StringFieldUpdateOperationsInput | string
   renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -624,7 +624,7 @@ export type PageUncheckedUpdateWithoutStartupsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   markdown?: Prisma.StringFieldUpdateOperationsInput | string
   renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -636,7 +636,7 @@ export type PageCreateManyAuthorInput = {
   slug: string
   pageName: string
   description: string
-  favIcon?: string | null
+  favIcon: string
   markdown: string
   renderedHtml: string
   createdAt?: Date | string
@@ -648,7 +648,7 @@ export type PageUpdateWithoutAuthorInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   markdown?: Prisma.StringFieldUpdateOperationsInput | string
   renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -661,7 +661,7 @@ export type PageUncheckedUpdateWithoutAuthorInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   markdown?: Prisma.StringFieldUpdateOperationsInput | string
   renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -674,7 +674,7 @@ export type PageUncheckedUpdateManyWithoutAuthorInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   pageName?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
-  favIcon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  favIcon?: Prisma.StringFieldUpdateOperationsInput | string
   markdown?: Prisma.StringFieldUpdateOperationsInput | string
   renderedHtml?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -794,7 +794,7 @@ export type $PagePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     slug: string
     pageName: string
     description: string
-    favIcon: string | null
+    favIcon: string
     markdown: string
     renderedHtml: string
     createdAt: Date

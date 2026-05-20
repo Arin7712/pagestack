@@ -2,7 +2,12 @@
 
 import { formSchema } from "@/lib/validations/form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, FieldErrors, useFieldArray, useForm } from "react-hook-form";
+import {
+  Controller,
+  FieldErrors,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import z from "zod";
 
 import { Button } from "../ui/button";
@@ -33,11 +38,10 @@ import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { User } from "@/generated/prisma/client";
 
-
 type CreatePageProps = User;
 
 const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
-  const [favIcon, setFavIcon] = useState<string>(user.profileImage || '/user-avatar.png');
+  const [favIcon, setFavIcon] = useState<string>(user.profileImage || "");
 
   const router = useRouter();
 
@@ -69,7 +73,7 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
   async function onSubmit(data: z.infer<typeof formSchema>) {
     await CreatePage(data);
     toast("Page created successfully.");
-    router.push("/pages");
+    router.push("/dashboard");
     console.log("FORM DATA", data);
   }
 
@@ -91,16 +95,18 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
         >
           <FieldGroup>
             {/* Page Favicon */}
-
             <div className="flex items-center justify-between gap-6">
-              
-              <Image
-                src={favIcon}
-                alt="Page Favicon"
-                width={50}
-                height={50}
-                className="rounded-full"
-              />
+              {favIcon ? (
+                <Image
+                  src={favIcon}
+                  alt="Page Favicon"
+                  width={50}
+                  height={50}
+                  className="rounded-full"
+                />
+              ) : (
+                <h1>No Favicon</h1>
+              )}
 
               <Controller
                 name="favIcon"
@@ -170,10 +176,12 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                   <Input
                     {...field}
                     aria-invalid={fieldState.invalid}
-                    placeholder="Login button not working on mobile"
+                    placeholder="Hey there! This is John"
                     autoComplete="off"
                   />
-                  <FieldDescription>Enter a brief description of your indie-page.</FieldDescription>
+                  <FieldDescription>
+                    Tell us how awesome you are.
+                  </FieldDescription>
                   {fieldState.invalid && (
                     <FieldError errors={[fieldState.error]} />
                   )}
@@ -193,7 +201,7 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                   <Textarea
                     {...field}
                     aria-invalid={fieldState.invalid}
-                    placeholder="Login button not working on mobile"
+                    placeholder="# Hey there! This is John"
                     autoComplete="off"
                   />
                   {fieldState.invalid && (
@@ -232,7 +240,7 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                         <Input
                           {...field}
                           aria-invalid={fieldState.invalid}
-                          placeholder="Login button not working on mobile"
+                          placeholder="Nvidia"
                           autoComplete="off"
                         />
                         {fieldState.invalid && (
@@ -252,7 +260,7 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                         <Input
                           {...field}
                           aria-invalid={fieldState.invalid}
-                          placeholder="Login button not working on mobile"
+                          placeholder="We are the first to hit a market cap of $5 trillion"
                           autoComplete="off"
                         />
                         {fieldState.invalid && (
@@ -263,24 +271,34 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                   />
 
                   {/* Startup FavIcon */}
-
-                  <Image
+                  <div>
+                    <Image
                     src={
                       form.watch(`startups.${index}.favIcon`) ||
-                      '/user-avatar.png'
+                      "/user-avatar.png"
                     }
                     alt="Profile Image"
                     width={50}
                     height={50}
                     className="rounded-full"
                   />
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={() => {
+                        form.setValue(`startups.${index}.favIcon`, "");
+                      }}
+                    >
+                      Remove
+                    </Button>
+                  </div>
                   <Controller
                     name={`startups.${index}.favIcon`}
                     control={form.control}
                     render={({ field, fieldState }) => (
                       <Field data-invalid={fieldState.invalid}>
                         <FieldLabel htmlFor="form-rhf-demo-title">
-                          Profile Image
+                          Startup Favicon
                         </FieldLabel>
                         <Input type="hidden" {...field} />
 
@@ -316,7 +334,7 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                         <Input
                           {...field}
                           aria-invalid={fieldState.invalid}
-                          placeholder="Login button not working on mobile"
+                          placeholder=""
                           autoComplete="off"
                         />
                         {fieldState.invalid && (
@@ -335,11 +353,18 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                         </FieldLabel>
                         <Input
                           {...field}
-                          aria-invalid={fieldState.invalid}
-                          placeholder="Login button not working on mobile"
-                          autoComplete="off"
                           type="number"
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          aria-invalid={fieldState.invalid}
+                          placeholder="0"
+                          autoComplete="off"
+                          value={field.value ?? ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+
+                            field.onChange(
+                              value === "" ? undefined : Number(value),
+                            );
+                          }}
                         />
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />
@@ -361,7 +386,9 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                           placeholder="Login button not working on mobile"
                           autoComplete="off"
                           type="number"
-                          onChange={(e) => field.onChange(e.target.valueAsNumber)}
+                          onChange={(e) =>
+                            field.onChange(e.target.valueAsNumber)
+                          }
                         />
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />

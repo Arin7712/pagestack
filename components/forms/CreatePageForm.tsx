@@ -28,7 +28,6 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "../ui/input";
-import { useState } from "react";
 import { CreatePage } from "@/lib/page";
 import { toast } from "sonner";
 import { UploadButton } from "@/lib/utils/uploadthing";
@@ -41,29 +40,30 @@ import { User } from "@/generated/prisma/client";
 type CreatePageProps = User;
 
 const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
-  const [favIcon, setFavIcon] = useState<string>(user.profileImage || "");
 
   const router = useRouter();
-
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       description: "",
       markdown: "",
-      favIcon: favIcon,
+      favIcon: user.profileImage || "",
       startups: [
         {
           name: "",
           favIcon: "",
           description: "",
           navLink: "",
-          revenue: 0,
-          userCount: 0,
+          revenue: undefined,
+          userCount: undefined,
         },
       ],
     },
   });
+  
+  const favIcon = form.watch("favIcon");
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -74,10 +74,9 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
     await CreatePage(data);
     toast("Page created successfully.");
     router.push("/dashboard");
-    console.log("FORM DATA", data);
   }
 
-  function onError(errors: FieldErrors<typeof formSchema>) {
+  function onError(errors: FieldErrors<z.infer<typeof formSchema>>) {
     console.log("FORM ERRORS", errors);
   }
 
@@ -125,7 +124,6 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                         const uploadedUrl = res[0].ufsUrl;
 
                         // connect uploadthing to react-hook-form
-                        setFavIcon(uploadedUrl);
                         field.onChange(uploadedUrl);
 
                         toast.success("Upload Completed");
@@ -273,15 +271,15 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                   {/* Startup FavIcon */}
                   <div>
                     <Image
-                    src={
-                      form.watch(`startups.${index}.favIcon`) ||
-                      "/user-avatar.png"
-                    }
-                    alt="Profile Image"
-                    width={50}
-                    height={50}
-                    className="rounded-full"
-                  />
+                      src={
+                        form.watch(`startups.${index}.favIcon`) ||
+                        "/user-avatar.png"
+                      }
+                      alt="Profile Image"
+                      width={50}
+                      height={50}
+                      className="rounded-full"
+                    />
                     <Button
                       type="button"
                       variant="destructive"
@@ -383,12 +381,17 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                         <Input
                           {...field}
                           aria-invalid={fieldState.invalid}
-                          placeholder="Login button not working on mobile"
+                          placeholder="0"
                           autoComplete="off"
                           type="number"
-                          onChange={(e) =>
-                            field.onChange(e.target.valueAsNumber)
-                          }
+                          value={field.value ?? ""}
+                          onChange={(e) => {
+                            const value = e.target.value;
+
+                            field.onChange(
+                              value === "" ? undefined : Number(value),
+                            );
+                          }}
                         />
                         {fieldState.invalid && (
                           <FieldError errors={[fieldState.error]} />

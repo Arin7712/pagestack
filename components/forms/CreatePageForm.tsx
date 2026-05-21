@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Controller,
   FieldErrors,
+  FormProvider,
   useFieldArray,
   useForm,
 } from "react-hook-form";
@@ -36,13 +37,15 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { User } from "@/generated/prisma/client";
+import FormInput from "../shared/FormInput";
+import NumberFormInput from "../shared/NumberFormInput";
+import ImageUploadField from "../shared/ImageUploadField";
 
 type CreatePageProps = User;
 
 const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
-
   const router = useRouter();
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,7 +65,7 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
       ],
     },
   });
-  
+
   const favIcon = form.watch("favIcon");
 
   const { fields, append, remove } = useFieldArray({
@@ -87,51 +90,49 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
         <CardDescription>Create your startup page</CardDescription>
       </CardHeader>
       <CardContent>
-        <form
-          id="form-hrf"
-          action=""
-          onSubmit={form.handleSubmit(onSubmit, onError)}
-        >
-          <FieldGroup>
-            {/* Page Favicon */}
-            <div className="flex items-center justify-between gap-6">
-              {favIcon ? (
-                <Image
-                  src={favIcon}
-                  alt="Page Favicon"
-                  width={50}
-                  height={50}
-                  className="rounded-full"
-                />
-              ) : (
-                <h1>No Favicon</h1>
-              )}
-
-              <Controller
+        <FormProvider {...form}>
+          <form id="form-hrf" onSubmit={form.handleSubmit(onSubmit, onError)}>
+            <FieldGroup>
+              {/* Page Favicon */}
+              <ImageUploadField
                 name="favIcon"
+                control={form.control}
+                label="Page Favicon"
+                alt="Page Favicon"
+                size={50}
+              />
+
+              {/* Name */}
+              <FormInput
+                name="name"
+                control={form.control}
+                label="Page Name"
+                placeholder="John Doe"
+              />
+
+              {/* Description */}
+              <FormInput
+                name="description"
+                control={form.control}
+                label="Page Description"
+                description="Tell us how awesome you are."
+                placeholder="Hey there! This is John"
+              />
+
+              {/* Markdown */}
+              <Controller
+                name="markdown"
                 control={form.control}
                 render={({ field, fieldState }) => (
                   <Field data-invalid={fieldState.invalid}>
                     <FieldLabel htmlFor="form-rhf-demo-title">
-                      Page Favicon
+                      Markdown
                     </FieldLabel>
-                    <Input type="hidden" {...field} />
-
-                    <UploadButton
-                      className="border rounded-lg"
-                      endpoint="imageUploader"
-                      onClientUploadComplete={(res) => {
-                        const uploadedUrl = res[0].ufsUrl;
-
-                        // connect uploadthing to react-hook-form
-                        field.onChange(uploadedUrl);
-
-                        toast.success("Upload Completed");
-                      }}
-                      onUploadError={(error: Error) => {
-                        // Do something with the error.
-                        alert(`ERROR! ${error.message}`);
-                      }}
+                    <Textarea
+                      {...field}
+                      aria-invalid={fieldState.invalid}
+                      placeholder="# Hey there! This is John"
+                      autoComplete="off"
                     />
                     {fieldState.invalid && (
                       <FieldError errors={[fieldState.error]} />
@@ -139,274 +140,82 @@ const CreatePageForm = ({ user }: { user: CreatePageProps }) => {
                   </Field>
                 )}
               />
-            </div>
 
-            {/* Name */}
-            <Controller
-              name="name"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-title">
-                    Page Name
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                    placeholder="John Doe"
-                    autoComplete="off"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-            {/* Description */}
-            <Controller
-              name="description"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-title">
-                    Page Description
-                  </FieldLabel>
-                  <Input
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                    placeholder="Hey there! This is John"
-                    autoComplete="off"
-                  />
-                  <FieldDescription>
-                    Tell us how awesome you are.
-                  </FieldDescription>
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            {/* Markdown */}
-            <Controller
-              name="markdown"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <Field data-invalid={fieldState.invalid}>
-                  <FieldLabel htmlFor="form-rhf-demo-title">
-                    Markdown
-                  </FieldLabel>
-                  <Textarea
-                    {...field}
-                    aria-invalid={fieldState.invalid}
-                    placeholder="# Hey there! This is John"
-                    autoComplete="off"
-                  />
-                  {fieldState.invalid && (
-                    <FieldError errors={[fieldState.error]} />
-                  )}
-                </Field>
-              )}
-            />
-
-            <Button
-              type="button"
-              onClick={() => {
-                append({
-                  name: "",
-                  favIcon: "",
-                  description: "",
-                  navLink: "",
-                  revenue: 0,
-                  userCount: 0,
-                });
-              }}
-            >
-              Add Startup
-            </Button>
-            {fields.map((item, index) => (
-              <div key={index}>
-                <FieldGroup>
-                  <Controller
-                    name={`startups.${index}.name`}
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="form-rhf-demo-title">
-                          Startup Name
-                        </FieldLabel>
-                        <Input
-                          {...field}
-                          aria-invalid={fieldState.invalid}
-                          placeholder="Nvidia"
-                          autoComplete="off"
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-                  <Controller
-                    name={`startups.${index}.description`}
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="form-rhf-demo-title">
-                          Startup Description
-                        </FieldLabel>
-                        <Input
-                          {...field}
-                          aria-invalid={fieldState.invalid}
-                          placeholder="We are the first to hit a market cap of $5 trillion"
-                          autoComplete="off"
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-
-                  {/* Startup FavIcon */}
-                  <div>
-                    <Image
-                      src={
-                        form.watch(`startups.${index}.favIcon`) ||
-                        "/user-avatar.png"
-                      }
-                      alt="Profile Image"
-                      width={50}
-                      height={50}
-                      className="rounded-full"
+              <Button
+                type="button"
+                onClick={() => {
+                  append({
+                    name: "",
+                    favIcon: "",
+                    description: "",
+                    navLink: "",
+                    revenue: 0,
+                    userCount: 0,
+                  });
+                }}
+              >
+                Add Startup
+              </Button>
+              {fields.map((item, index) => (
+                <div key={item.id}>
+                  <FieldGroup>
+                    {/* Startup Name */}
+                    <FormInput
+                      name={`startups.${index}.name`}
+                      control={form.control}
+                      label="Startup Name"
+                      placeholder="Nvidia"
                     />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      onClick={() => {
-                        form.setValue(`startups.${index}.favIcon`, "");
-                      }}
-                    >
-                      Remove
-                    </Button>
-                  </div>
-                  <Controller
-                    name={`startups.${index}.favIcon`}
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="form-rhf-demo-title">
-                          Startup Favicon
-                        </FieldLabel>
-                        <Input type="hidden" {...field} />
 
-                        <UploadButton
-                          endpoint="imageUploader"
-                          onClientUploadComplete={(res) => {
-                            const uploadedUrl = res[0].ufsUrl;
+                    {/* Startup Description */}
+                    <FormInput
+                      name={`startups.${index}.description`}
+                      control={form.control}
+                      label="Startup Description"
+                      placeholder="We are the first to hit a market cap of $5 trillion"
+                    />
 
-                            // connect uploadthing to react-hook-form
-                            field.onChange(uploadedUrl);
+                    {/* Startup FavIcon */}
+                    <ImageUploadField
+                      control={form.control}
+                      name={`startups.${index}.favIcon`}
+                      label="Startup Favicon"
+                    />
 
-                            toast.success("Upload Completed");
-                          }}
-                          onUploadError={(error: Error) => {
-                            // Do something with the error.
-                            alert(`ERROR! ${error.message}`);
-                          }}
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-                  <Controller
-                    name={`startups.${index}.navLink`}
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="form-rhf-demo-title">
-                          Startup Link
-                        </FieldLabel>
-                        <Input
-                          {...field}
-                          aria-invalid={fieldState.invalid}
-                          placeholder=""
-                          autoComplete="off"
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-                  <Controller
-                    name={`startups.${index}.revenue`}
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="form-rhf-demo-title">
-                          Startup Revenue
-                        </FieldLabel>
-                        <Input
-                          {...field}
-                          type="number"
-                          aria-invalid={fieldState.invalid}
-                          placeholder="0"
-                          autoComplete="off"
-                          value={field.value ?? ""}
-                          onChange={(e) => {
-                            const value = e.target.value;
+                    {/* Startup Link */}
+                    <FormInput
+                      name={`startups.${index}.navLink`}
+                      control={form.control}
+                      label="Startup Link"
+                      description="Help us find you"
+                    />
 
-                            field.onChange(
-                              value === "" ? undefined : Number(value),
-                            );
-                          }}
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-                  <Controller
-                    name={`startups.${index}.userCount`}
-                    control={form.control}
-                    render={({ field, fieldState }) => (
-                      <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel htmlFor="form-rhf-demo-title">
-                          Startup User Count
-                        </FieldLabel>
-                        <Input
-                          {...field}
-                          aria-invalid={fieldState.invalid}
-                          placeholder="0"
-                          autoComplete="off"
-                          type="number"
-                          value={field.value ?? ""}
-                          onChange={(e) => {
-                            const value = e.target.value;
+                    {/* Startup Revenue */}
+                    <NumberFormInput
+                      name={`startups.${index}.revenue`}
+                      control={form.control}
+                      label="Startup Revenue"
+                      description="How much revenue do you generate?"
+                      placeholder="0"
+                    />
 
-                            field.onChange(
-                              value === "" ? undefined : Number(value),
-                            );
-                          }}
-                        />
-                        {fieldState.invalid && (
-                          <FieldError errors={[fieldState.error]} />
-                        )}
-                      </Field>
-                    )}
-                  />
-                </FieldGroup>
-                <Button onClick={() => remove(index)} type="button">
-                  Remove
-                </Button>
-              </div>
-            ))}
-          </FieldGroup>
-        </form>
+                    {/* Startup User Count */}
+                    <NumberFormInput
+                      name={`startups.${index}.userCount`}
+                      control={form.control}
+                      label="Startup User Count"
+                      description="How many users do you have?"
+                      placeholder="0"
+                    />
+                  </FieldGroup>
+                  <Button onClick={() => remove(index)} type="button">
+                    Remove
+                  </Button>
+                </div>
+              ))}
+            </FieldGroup>
+          </form>
+        </FormProvider>
       </CardContent>
       <CardFooter>
         <Field orientation="horizontal">

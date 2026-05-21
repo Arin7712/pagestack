@@ -12,7 +12,6 @@ import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Input } from "../ui/input";
 import { UploadButton } from "@/lib/utils/uploadthing";
 import { toast } from "sonner";
-import { formSchema } from "@/lib/validations/form";
 
 type ImageUploadFieldProps<T extends FieldValues> = {
   name: FieldPath<T>;
